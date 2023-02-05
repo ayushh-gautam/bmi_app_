@@ -9,9 +9,6 @@ enum Gender {
   female,
 }
 
-int height = 150;
-int weight = 30;
-
 class BmiApp extends StatefulWidget {
   const BmiApp({super.key});
 
@@ -20,7 +17,18 @@ class BmiApp extends StatefulWidget {
 }
 
 class _BmiAppState extends State<BmiApp> {
+  int height = 150;
+  int weight = 30;
+  int age = 16;
   Gender? selectedGender;
+
+  void reset() {
+    setState(() {
+      height = 0;
+      weight = 0;
+      age = 0;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +39,7 @@ class _BmiAppState extends State<BmiApp> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            /*----------------------GENDER SECTION------------------------*/
             Expanded(
               child: Row(
                 children: [
@@ -68,6 +77,8 @@ class _BmiAppState extends State<BmiApp> {
                 ],
               ),
             ),
+
+            /*------------------------HEIGHT SECTION-----------------------*/
             Expanded(
                 child: CustomCard(
               colour: kActiveBoxColors,
@@ -96,21 +107,32 @@ class _BmiAppState extends State<BmiApp> {
                       )
                     ],
                   ),
-                  Slider(
-                    activeColor: Color(0xFFEB1555),
-                    inactiveColor: Color(0xFF101427),
-                    min: 130.0,
-                    max: 200.0,
-                    value: height.toDouble(),
-                    onChanged: (double newValue) {
-                      setState(() {
-                        height = newValue.round();
-                      });
-                    },
+                  SliderTheme(
+                    data: SliderThemeData(
+                        activeTrackColor: Colors.white,
+                        inactiveTrackColor: Color(0xFF8D8E98),
+                        thumbColor: Color(0xFFEB1555),
+                        thumbShape:
+                            RoundSliderThumbShape(enabledThumbRadius: 15),
+                        overlayShape:
+                            RoundSliderOverlayShape(overlayRadius: 30),
+                        overlayColor: Color(0x29EB1555)),
+                    child: Slider(
+                      min: 130.0,
+                      max: 200.0,
+                      value: height.toDouble(),
+                      onChanged: (double newValue) {
+                        setState(() {
+                          height = newValue.round();
+                        });
+                      },
+                    ),
                   )
                 ],
               ),
             )),
+
+            /*---------------------WEIGHTT & AGE SECTIONN---------------------------*/
             Expanded(
               child: Row(
                 children: [
@@ -161,22 +183,78 @@ class _BmiAppState extends State<BmiApp> {
                       ],
                     ),
                   )),
-                  Expanded(child: CustomCard(colour: kActiveBoxColors))
+                  /* -----------------------AGE SECTION-----------------------*/
+                  Expanded(
+                      child: CustomCard(
+                    colour: kActiveBoxColors,
+                    cardChild: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'AGE',
+                          style: kLabelTextStyle,
+                        ),
+                        Text(
+                          age.toString(),
+                          style: kNumberTextStyle,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            FloatingActionButton(
+                              onPressed: () {
+                                setState(() {
+                                  age--;
+                                });
+                              },
+                              child: Icon(Icons.remove),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            FloatingActionButton(
+                              onPressed: () {
+                                setState(() {
+                                  age++;
+                                });
+                              },
+                              child: Icon(Icons.add),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ))
                 ],
               ),
             ),
-            Container(
-              margin: EdgeInsets.only(top: 9.0),
-              decoration: BoxDecoration(
-                  color: kContainerColor,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(9),
-                      topRight: Radius.circular(9))),
-              height: kContainerHeight,
-              width: double.infinity,
+
+            /*---------CALCULATE BUTTON-------------------*/
+            GestureDetector(
+              onTap: (() {
+                reset();
+              }),
+              child: Container(
+                margin: EdgeInsets.only(top: 9.0),
+                decoration: BoxDecoration(
+                    color: kContainerColor,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(9),
+                        topRight: Radius.circular(9))),
+                height: kContainerHeight,
+                width: double.infinity,
+                child: Center(
+                  child: Text(
+                    'CACLCULATE',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 25,
+                        fontWeight: FontWeight.w800),
+                  ),
+                ),
+              ),
             )
           ],
         ));
   }
 }
-//02:10
