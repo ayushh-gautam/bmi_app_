@@ -11,6 +11,11 @@ void main(List<String> args) {
       appBarTheme: const AppBarTheme(color: Color(0xFF090C22)),
       scaffoldBackgroundColor: const Color(0xFF090C22),
     ),
-    home: const BmiApp(),
+    home: BmiApp(),
+// initialRoute: '/',
+//     routes: {
+//       '/':(context) => BmiApp(),
+//       '/resultPage':(context) => Resul
+//     },
   ));
 }

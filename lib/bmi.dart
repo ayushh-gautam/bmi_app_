@@ -1,4 +1,5 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+import 'package:bmi_calculator/results.dart';
 import 'package:flutter/material.dart';
 import 'widgets.dart';
 
@@ -34,7 +35,7 @@ class _BmiAppState extends State<BmiApp> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Center(child: Text('BMI Calculator')),
+          title: Center(child: Text('BMI CALCULATOR')),
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -118,12 +119,12 @@ class _BmiAppState extends State<BmiApp> {
                             RoundSliderOverlayShape(overlayRadius: 30),
                         overlayColor: Color(0x29EB1555)),
                     child: Slider(
-                      min: 130.0,
-                      max: 200.0,
+                      min: 120.0,
+                      max: 230.0,
                       value: height.toDouble(),
-                      onChanged: (double newValue) {
+                      onChanged: (double myNewValue) {
                         setState(() {
-                          height = newValue.round();
+                          height = myNewValue.round();
                         });
                       },
                     ),
@@ -146,38 +147,34 @@ class _BmiAppState extends State<BmiApp> {
                           'WEIGHT',
                           style: kLabelTextStyle,
                         ),
-                        SizedBox(
-                          height: 10,
-                        ),
+
                         Text(
                           weight.toString(),
                           style: kNumberTextStyle,
                         ),
-                        SizedBox(
-                          height: 20,
-                        ),
+                        // SizedBox(
+                        //   height: 20,
+                        // ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            FloatingActionButton(
-                              onPressed: () {
-                                setState(() {
-                                  weight--;
-                                });
-                              },
-                              child: Icon(Icons.remove),
-                            ),
+                            RoundIconButton(
+                                icon: Icons.add,
+                                onPressed: (() {
+                                  setState(() {
+                                    weight--;
+                                  });
+                                })),
                             SizedBox(
                               width: 20,
                             ),
-                            FloatingActionButton(
-                              onPressed: () {
-                                setState(() {
-                                  weight++;
-                                });
-                              },
-                              child: Icon(Icons.add),
-                            ),
+                            RoundIconButton(
+                                icon: Icons.add,
+                                onPressed: (() {
+                                  setState(() {
+                                    weight++;
+                                  });
+                                }))
                           ],
                         )
                       ],
@@ -201,25 +198,25 @@ class _BmiAppState extends State<BmiApp> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            FloatingActionButton(
+                            RoundIconButton(
                               onPressed: () {
                                 setState(() {
                                   age--;
                                 });
                               },
-                              child: Icon(Icons.remove),
+                              icon: Icons.remove,
                             ),
                             SizedBox(
                               width: 20,
                             ),
-                            FloatingActionButton(
+                            RoundIconButton(
                               onPressed: () {
                                 setState(() {
                                   age++;
                                 });
                               },
-                              child: Icon(Icons.add),
-                            ),
+                              icon: Icons.add,
+                            )
                           ],
                         )
                       ],
@@ -229,30 +226,15 @@ class _BmiAppState extends State<BmiApp> {
               ),
             ),
 
+            //=======35:44
+
             /*---------CALCULATE BUTTON-------------------*/
-            GestureDetector(
+            BottomCalculateConainer(
+              buttonTiltle: 'CALCULATE',
               onTap: (() {
-                reset();
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ResultPage()));
               }),
-              child: Container(
-                margin: EdgeInsets.only(top: 9.0),
-                decoration: BoxDecoration(
-                    color: kContainerColor,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(9),
-                        topRight: Radius.circular(9))),
-                height: kContainerHeight,
-                width: double.infinity,
-                child: Center(
-                  child: Text(
-                    'CACLCULATE',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 25,
-                        fontWeight: FontWeight.w800),
-                  ),
-                ),
-              ),
             )
           ],
         ));
