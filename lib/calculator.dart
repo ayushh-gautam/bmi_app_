@@ -33,5 +33,6 @@ class BmiCalculator {
     } else {
       return 'Eat more and exercise more you thin ass bamboo!';
     }
+    //app completed
   }
 }
