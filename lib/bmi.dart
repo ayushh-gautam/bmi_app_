@@ -1,4 +1,5 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+import 'package:bmi_calculator/calculator.dart';
 import 'package:bmi_calculator/results.dart';
 import 'package:flutter/material.dart';
 import 'widgets.dart';
@@ -19,17 +20,9 @@ class BmiApp extends StatefulWidget {
 
 class _BmiAppState extends State<BmiApp> {
   int height = 150;
-  int weight = 30;
+  int weight = 60;
   int age = 16;
   Gender? selectedGender;
-
-  void reset() {
-    setState(() {
-      height = 0;
-      weight = 0;
-      age = 0;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -232,8 +225,16 @@ class _BmiAppState extends State<BmiApp> {
             BottomCalculateConainer(
               buttonTiltle: 'CALCULATE',
               onTap: (() {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ResultPage()));
+                BmiCalculator calcu =
+                    BmiCalculator(height: height, weight: weight);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ResultPage(
+                              bmiResult: calcu.calculateBmi(),
+                              bmiText: calcu.getResult(),
+                              bmiInterpretion: calcu.getInterpretation(),
+                            )));
               }),
             )
           ],

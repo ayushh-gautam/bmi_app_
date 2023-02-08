@@ -1,11 +1,17 @@
-// ignore_for_file: prefer_const_constructors
-
+// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, prefer_const_constructors_in_immutables, non_constant_identifier_names
+import 'package:bmi_calculator/bmi.dart';
 import 'package:flutter/material.dart';
 import 'constants.dart';
 import 'widgets.dart';
 
 class ResultPage extends StatelessWidget {
-  const ResultPage({super.key});
+  ResultPage(
+      {@required this.bmiResult,
+      @required this.bmiText,
+      @required this.bmiInterpretion});
+  final String? bmiResult;
+  final String? bmiText;
+  final String? bmiInterpretion;
 
   @override
   Widget build(BuildContext context) {
@@ -33,15 +39,15 @@ class ResultPage extends StatelessWidget {
                   // ignore: prefer_const_literals_to_create_immutables
                   children: [
                     Text(
-                      'Normal',
+                      bmiText.toString().toUpperCase(),
                       style: kResultTextStyle,
                     ),
                     Text(
-                      '68',
+                      bmiResult.toString(),
                       style: kBmiResultStyle,
                     ),
                     Text(
-                      'You are currently underweight, do some exercise',
+                      bmiInterpretion.toString(),
                       textAlign: TextAlign.center,
                       style: kNotationStyle,
                     )
@@ -50,7 +56,9 @@ class ResultPage extends StatelessWidget {
               )),
           BottomCalculateConainer(
             buttonTiltle: 'RE-CALCULATE',
-            onTap: (() {}),
+            onTap: (() {
+              Navigator.pop(context);
+            }),
           ),
         ],
       ),
